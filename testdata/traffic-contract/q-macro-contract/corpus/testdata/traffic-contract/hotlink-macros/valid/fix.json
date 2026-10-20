@@ -1,0 +1,65 @@
+{
+  "revisionId": "fix.hotlink-macros.1",
+  "rows": [
+    {
+      "distributionKey": "redirect.target.default",
+      "choiceId": "disabled_target",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "redirect.target.rule.ta-source-eq-slot",
+      "choiceId": "disabled_target",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.default",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-all-combo",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-any-src-or-sub",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-unblocked-source",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-eq-ads",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-exists",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-in-partners",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-eq-main",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-exists",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-in-tags",
+      "choiceId": "redirect",
+      "mode": "NONE"
+    }
+  ]
+}

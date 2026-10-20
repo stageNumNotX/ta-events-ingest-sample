@@ -1,0 +1,16 @@
+.git
+.github
+.gitignore
+*.md
+deploy
+edge
+bin
+dist
+*.local
+.env
+.env.*
+.local.env
+.DS_Store
+.idea
+.vscode
+gha-creds-*.json

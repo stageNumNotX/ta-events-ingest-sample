@@ -1,0 +1,415 @@
+{
+  "solverId": "traffic.alloc.v1",
+  "totalShare": 10000,
+  "cases": [
+    {
+      "name": "scores-1-2-3",
+      "notes": "required spec example; floors 1666,3333,5000 then remainder to a",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "b",
+          "score": 2,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "c",
+          "score": 3,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "ok",
+        "shares": [
+          1667,
+          3333,
+          5000
+        ],
+        "cumulativeEnds": [
+          1667,
+          5000,
+          10000
+        ],
+        "sum": 10000
+      }
+    },
+    {
+      "name": "three-equal-skins",
+      "notes": "required spec example",
+      "choices": [
+        {
+          "choiceId": "glass_right_form",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "minimal_center",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "velvet_left_form",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "ok",
+        "shares": [
+          3334,
+          3333,
+          3333
+        ],
+        "cumulativeEnds": [
+          3334,
+          6667,
+          10000
+        ],
+        "sum": 10000
+      }
+    },
+    {
+      "name": "hot-score-cap",
+      "notes": "required spec example",
+      "choices": [
+        {
+          "choiceId": "cold",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "hot",
+          "score": 9,
+          "min": 0,
+          "max": 1000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "ok",
+        "shares": [
+          9000,
+          1000
+        ],
+        "cumulativeEnds": [
+          9000,
+          10000
+        ],
+        "sum": 10000
+      }
+    },
+    {
+      "name": "exact-exclude-free",
+      "notes": "required spec example",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "EXACT",
+            "exactBasisPoints": 2500
+          }
+        },
+        {
+          "choiceId": "b",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "EXCLUDE"
+          }
+        },
+        {
+          "choiceId": "c",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "ok",
+        "shares": [
+          2500,
+          0,
+          7500
+        ],
+        "cumulativeEnds": [
+          2500,
+          2500,
+          10000
+        ],
+        "sum": 10000
+      }
+    },
+    {
+      "name": "two-equal",
+      "notes": "",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "b",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "ok",
+        "shares": [
+          5000,
+          5000
+        ],
+        "cumulativeEnds": [
+          5000,
+          10000
+        ],
+        "sum": 10000
+      }
+    },
+    {
+      "name": "zero-score-keeps-min",
+      "notes": "",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 0,
+          "min": 1000,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "b",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "ok",
+        "shares": [
+          1000,
+          9000
+        ],
+        "cumulativeEnds": [
+          1000,
+          10000
+        ],
+        "sum": 10000
+      }
+    },
+    {
+      "name": "four-equal-galleries",
+      "notes": "",
+      "choices": [
+        {
+          "choiceId": "home-kitchen",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "home-sauna-swimwear",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "home-sauna-towel-wave",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "kitchen-swimwear",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "ok",
+        "shares": [
+          2500,
+          2500,
+          2500,
+          2500
+        ],
+        "cumulativeEnds": [
+          2500,
+          5000,
+          7500,
+          10000
+        ],
+        "sum": 10000
+      }
+    },
+    {
+      "name": "fix-overflow",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "EXACT",
+            "exactBasisPoints": 6000
+          }
+        },
+        {
+          "choiceId": "b",
+          "score": 1,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "EXACT",
+            "exactBasisPoints": 5000
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "code": "FIX_OVERFLOW"
+      }
+    },
+    {
+      "name": "insufficient-capacity",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 1,
+          "min": 6000,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "b",
+          "score": 1,
+          "min": 5000,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "code": "INSUFFICIENT_CAPACITY"
+      }
+    },
+    {
+      "name": "residual-no-positive-score",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 0,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        },
+        {
+          "choiceId": "b",
+          "score": 0,
+          "min": 0,
+          "max": 10000,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "code": "RESIDUAL_NO_POSITIVE_SCORE"
+      }
+    },
+    {
+      "name": "invalid-bounds",
+      "choices": [
+        {
+          "choiceId": "a",
+          "score": 1,
+          "min": 20,
+          "max": 10,
+          "fix": {
+            "mode": "NONE"
+          }
+        }
+      ],
+      "expected": {
+        "status": "reject",
+        "code": "INVALID_BOUNDS"
+      }
+    }
+  ]
+}

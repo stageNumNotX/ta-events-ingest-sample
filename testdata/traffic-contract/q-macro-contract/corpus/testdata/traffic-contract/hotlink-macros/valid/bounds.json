@@ -1,0 +1,77 @@
+{
+  "revisionId": "bounds.hotlink-macros.1",
+  "rows": [
+    {
+      "distributionKey": "redirect.target.default",
+      "choiceId": "disabled_target",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "redirect.target.rule.ta-source-eq-slot",
+      "choiceId": "disabled_target",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.default",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-all-combo",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-any-src-or-sub",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-unblocked-source",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-eq-ads",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-exists",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-in-partners",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-eq-main",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-exists",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-in-tags",
+      "choiceId": "redirect",
+      "minBasisPoints": 0,
+      "maxBasisPoints": 10000
+    }
+  ]
+}

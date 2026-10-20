@@ -1,0 +1,105 @@
+{
+  "transform": "share-to-cumulativeEnds",
+  "cases": [
+    {
+      "name": "scores-1-2-3",
+      "shares": [
+        1667,
+        3333,
+        5000
+      ],
+      "cumulativeEnds": [
+        1667,
+        5000,
+        10000
+      ]
+    },
+    {
+      "name": "three-equal-skins",
+      "shares": [
+        3334,
+        3333,
+        3333
+      ],
+      "cumulativeEnds": [
+        3334,
+        6667,
+        10000
+      ]
+    },
+    {
+      "name": "hot-score-cap",
+      "shares": [
+        9000,
+        1000
+      ],
+      "cumulativeEnds": [
+        9000,
+        10000
+      ]
+    },
+    {
+      "name": "exact-exclude-free",
+      "shares": [
+        2500,
+        0,
+        7500
+      ],
+      "cumulativeEnds": [
+        2500,
+        2500,
+        10000
+      ]
+    },
+    {
+      "name": "two-equal",
+      "shares": [
+        5000,
+        5000
+      ],
+      "cumulativeEnds": [
+        5000,
+        10000
+      ]
+    },
+    {
+      "name": "zero-score-keeps-min",
+      "shares": [
+        1000,
+        9000
+      ],
+      "cumulativeEnds": [
+        1000,
+        10000
+      ]
+    },
+    {
+      "name": "four-equal-galleries",
+      "shares": [
+        2500,
+        2500,
+        2500,
+        2500
+      ],
+      "cumulativeEnds": [
+        2500,
+        5000,
+        7500,
+        10000
+      ]
+    },
+    {
+      "name": "zero-share-equal-boundaries",
+      "shares": [
+        0,
+        4000,
+        6000
+      ],
+      "cumulativeEnds": [
+        0,
+        4000,
+        10000
+      ]
+    }
+  ]
+}

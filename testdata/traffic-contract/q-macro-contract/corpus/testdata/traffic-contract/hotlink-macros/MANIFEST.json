@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "root": "testdata/traffic-contract/hotlink-macros",
+  "oracle": "producer",
+  "oracleDigest": "eddc83fd05225ec71368f4570fce593f30a2d9bef3b8a1abc4981ad6686208f5",
+  "oracleFiles": [
+    "decision-vectors.json",
+    "valid/program.json",
+    "valid/weights.json",
+    "valid/release.json"
+  ],
+  "files": {
+    "decision-vectors.json": "b84e8f86c132c6f701ede101744c79279e2db19a37d4d7bd5d21872543b7ebab",
+    "valid/bounds.json": "0176f41a5df7e26a8a09081d2e925a041d52ac8a48c70f33833bc4d581382ff9",
+    "valid/configuration.json": "2739e26ae69b96150bd2eba738122368e633a47b85cdede122cb9b2c06961c1c",
+    "valid/fix.json": "eecbd0f978fdc218eeeebf74511acc318c055966c67d4f458b5ccc35a3f367bd",
+    "valid/policy.json": "e6576898595aef2b99a2ae8eaa8f5b4dba38573c92a033c32a88c170accc6f81",
+    "valid/program.json": "592439be9decb596f40b03d6c7ecaba035fc2df0ab597c77bd40379982c1b3ff",
+    "valid/release.json": "aef5ecbfd3035a00541a11661cdb5adeb478505286658b917ded90866198b370",
+    "valid/signals.json": "181401e2b9bac1dd49a47e433063ff3705867b250b6e86eb2be58ab6ed36a9c3",
+    "valid/source.json": "b6066d3bf59ab4af4fd15e27e2f84a1a87333fb03837ac135412c02ded1e704a",
+    "valid/weights.json": "e088220c3ccf7eb8df22a99f08fd39da284af1a075d9ded3871b206aac15de9d"
+  }
+}

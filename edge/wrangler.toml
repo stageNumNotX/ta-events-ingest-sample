@@ -1,0 +1,14 @@
+# Cloudflare Worker reverse-proxy in front of the Cloud Run ingest service.
+# Bind a Workers Route (not custom_domain). Do not commit a real account_id.
+name = "ta-events-ingest-edge"
+main = "src/index.js"
+compatibility_date = "2026-06-23"
+workers_dev = false
+# account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+
+[vars]
+ORIGIN = "https://YOUR_CLOUD_RUN_URL"
+
+[[routes]]
+pattern = "ingest.example.com/*"
+zone_name = "example.com"

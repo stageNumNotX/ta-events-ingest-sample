@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1
+
+# Separate image for cmd/traffic-runtime. Root Dockerfile builds cmd/server.
+FROM golang:1.26 AS build
+WORKDIR /src
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+ARG REVISION=unknown
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w -X main.revision=${REVISION}" -o /bin/traffic-runtime ./cmd/traffic-runtime
+
+FROM gcr.io/distroless/static-debian12:nonroot
+ARG REVISION=unknown
+LABEL org.opencontainers.image.revision="${REVISION}"
+LABEL org.opencontainers.image.source="https://github.com/stageNumNotX/ta-events-ingest"
+LABEL org.opencontainers.image.title="ta-traffic-runtime"
+COPY --from=build /bin/traffic-runtime /traffic-runtime
+COPY --from=build /src/docker-pinned /pinned
+EXPOSE 8080
+USER nonroot:nonroot
+ENTRYPOINT ["/traffic-runtime"]

@@ -1,0 +1,234 @@
+name: Deploy traffic-runtime prototype
+
+# Manual prototype deploy. Never deploys ta-events-ingest.
+# Serving job: one revision, 100% pinned to that revision. No --no-traffic tags.
+# Probe jobs use a separate Cloud Run service, then scale to zero.
+# Not pull_request_target. Does not use ingest secrets.
+# Set repo variables GCP_PROJECT_ID, GCP_REGION, GCP_RUNTIME_SA, GCP_WIF_PROVIDER.
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  REGION: ${{ vars.GCP_REGION || 'europe-west1' }}
+  SERVICE: ta-traffic-runtime-proto
+  PROBE_SERVICE: ta-traffic-runtime-proto-probe
+  DEPLOY_SA: ${{ vars.GCP_RUNTIME_SA }}
+  WIF_PROVIDER: ${{ vars.GCP_WIF_PROVIDER }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Vet
+        run: go vet ./...
+      - name: Test
+        run: go test -race ./...
+      - name: T9 resolver bench
+        run: go test ./internal/traffic -bench=BenchmarkT9ResolveRedirect -benchtime=2s -count=1 -timeout 2m
+      - name: Events pull evaluator
+        run: python3 scripts/traffic-runtime-events-eval.py --self-test
+
+  deploy:
+    needs: [test, fetch-pinned]
+    if: ${{ vars.GCP_PROJECT_ID != '' && vars.GCP_WIF_PROVIDER != '' && vars.GCP_RUNTIME_SA != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Guard service name
+        run: |
+          test "${SERVICE}" = "ta-traffic-runtime-proto"
+          test "${SERVICE}" != "ta-events-ingest"
+          if [[ "${GITHUB_REF_NAME}" == "task/hot-link-macros-t11" ]]; then
+            echo "refusing serving deploy from task/hot-link-macros-t11 (pin 00088-gwx)" >&2
+            exit 1
+          fi
+
+      - id: auth
+        name: Authenticate to GCP (WIF)
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.DEPLOY_SA }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Download C1 pinned bytes
+        uses: actions/download-artifact@v4
+        with:
+          name: traffic-runtime-pinned
+          path: docs/traffic-runtime/evidence/pinned
+
+      - name: Deploy prototype
+        env:
+          PINNED_OVERLAY: docs/traffic-runtime/evidence/pinned
+        run: bash scripts/traffic-runtime-deploy.sh
+
+      - name: Drain leftover verify messages
+        continue-on-error: true
+        run: bash scripts/traffic-runtime-events-drain.sh
+
+      - name: Smoke
+        run: bash scripts/traffic-runtime-smoke.sh
+
+      - name: Pull prototype events
+        continue-on-error: true
+        run: bash scripts/traffic-runtime-events-smoke.sh
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: T9 cloud load
+        run: bash scripts/traffic-runtime-t9.sh
+      - name: Upload T9 evidence
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: traffic-runtime-t9
+          path: |
+            docs/traffic-runtime/evidence/T9_LOAD.txt
+            docs/traffic-runtime/evidence/T9_RESOLVER.txt
+          if-no-files-found: warn
+
+      - name: T3/T5 GCS probe (probe service)
+        continue-on-error: true
+        env:
+          SERVICE: ta-traffic-runtime-proto-probe
+          PINNED_OVERLAY: docs/traffic-runtime/evidence/pinned
+        run: bash scripts/traffic-runtime-gcs-probe.sh
+
+      - name: T7 SIGTERM drain probe (probe service)
+        continue-on-error: true
+        env:
+          SERVICE: ta-traffic-runtime-proto-probe
+        run: bash scripts/traffic-runtime-sigterm-probe.sh
+
+      - name: Scale probe service to zero
+        if: always()
+        continue-on-error: true
+        env:
+          SERVICE: ta-traffic-runtime-proto-probe
+        run: bash scripts/traffic-runtime-probe-idle.sh
+
+      - name: Show publisher errors
+        if: always()
+        continue-on-error: true
+        run: bash scripts/traffic-runtime-publish-errors.sh
+
+      - name: Upload T3/T5/T7 probe evidence
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: traffic-runtime-t3-t5-t7
+          path: |
+            docs/traffic-runtime/evidence/T3_T5_GCS.txt
+            docs/traffic-runtime/evidence/T7_SIGTERM.txt
+          if-no-files-found: warn
+
+      - name: Show evidence
+        if: always()
+        run: |
+          echo "HEAD=$(git rev-parse HEAD)"
+          cat docs/traffic-runtime/evidence/P1_DEPLOY.txt
+          if [[ -f docs/traffic-runtime/evidence/P4_PUBSUB.txt ]]; then
+            cat docs/traffic-runtime/evidence/P4_PUBSUB.txt
+          fi
+          if [[ -f docs/traffic-runtime/evidence/P4_EVENTS.txt ]]; then
+            cat docs/traffic-runtime/evidence/P4_EVENTS.txt
+          fi
+          if [[ -f docs/traffic-runtime/evidence/T3_T5_GCS.txt ]]; then
+            cat docs/traffic-runtime/evidence/T3_T5_GCS.txt
+          fi
+          if [[ -f docs/traffic-runtime/evidence/T7_SIGTERM.txt ]]; then
+            cat docs/traffic-runtime/evidence/T7_SIGTERM.txt
+          fi
+          if [[ -f docs/traffic-runtime/evidence/T9_LOAD.txt ]]; then
+            cat docs/traffic-runtime/evidence/T9_LOAD.txt
+          fi
+          if [[ -f docs/traffic-runtime/evidence/T9_RESOLVER.txt ]]; then
+            cat docs/traffic-runtime/evidence/T9_RESOLVER.txt
+          fi
+
+  fetch-pinned:
+    needs: test
+    if: ${{ vars.GCP_PROJECT_ID != '' && vars.GCP_WIF_PROVIDER != '' && vars.GCP_RUNTIME_SA != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: auth
+        name: Authenticate to GCP (WIF)
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.DEPLOY_SA }}
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v3
+      - name: Fetch pinned traffic artifacts
+        run: bash scripts/traffic-runtime-fetch-artifacts.sh
+      - name: Fetch owner-drop handoff
+        continue-on-error: true
+        run: bash scripts/traffic-runtime-fetch-handoff.sh
+      - name: Fetch producer pointer
+        run: bash scripts/traffic-runtime-fetch-pointer.sh
+      - name: Upload pointer evidence
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: traffic-runtime-pointer
+          path: docs/traffic-runtime/evidence/T4_POINTER.txt
+          if-no-files-found: warn
+      - name: Show pointer evidence
+        if: always()
+        continue-on-error: true
+        run: |
+          if [[ -f docs/traffic-runtime/evidence/T4_POINTER.txt ]]; then
+            cat docs/traffic-runtime/evidence/T4_POINTER.txt
+          fi
+      - name: Upload handoff evidence
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: traffic-runtime-handoff
+          path: |
+            docs/traffic-runtime/evidence/T2_HANDOFF.txt
+            docs/traffic-runtime/evidence/owner-drop/manifest.json
+          if-no-files-found: warn
+      - name: Show handoff evidence
+        if: always()
+        continue-on-error: true
+        run: |
+          if [[ -f docs/traffic-runtime/evidence/T2_HANDOFF.txt ]]; then
+            cat docs/traffic-runtime/evidence/T2_HANDOFF.txt
+          fi
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Load pins via Go GCS client
+        env:
+          TRAFFIC_RUNTIME_LIVE_GCS: "1"
+        run: go test ./internal/runtimeloader -run 'TestLiveGCS' -count=1 -timeout 90s
+      - name: Upload pinned bytes
+        uses: actions/upload-artifact@v4
+        with:
+          name: traffic-runtime-pinned
+          path: docs/traffic-runtime/evidence/pinned/
+          if-no-files-found: error
+      - name: Show pin evidence
+        run: cat docs/traffic-runtime/evidence/P2_PINNED.txt

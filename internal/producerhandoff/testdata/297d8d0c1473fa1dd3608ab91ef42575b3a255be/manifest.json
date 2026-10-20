@@ -1,0 +1,57 @@
+{
+  "package": "traffic-country-handoff",
+  "producerRepo": "stageNumNotX/compiler-service",
+  "producerSha": "10b0da88732859b62ba6fa625a7467af28f657f9",
+  "contract": {
+    "artifactVersions": {
+      "program": 1,
+      "weights": 1,
+      "release": 1
+    },
+    "compileTarget": "traffic-runtime/v1",
+    "contextRegistryVersion": 1,
+    "contentRegistryVersions": [
+      1,
+      2
+    ],
+    "redirectTarget": {
+      "typeId": "redirect-target",
+      "schemaVersion": 2,
+      "handlerVersion": "redirect-target-v2"
+    },
+    "hash": "traffic.hash.v1",
+    "hashLengthPrefix": "uint16BE"
+  },
+  "files": {
+    "testdata/traffic-contract/v1/MANIFEST.json": "44ebb8e1382062912b6ac85914dd63868ece26debdef446fdc77df2866f5ff35",
+    "testdata/traffic-contract/v1/hash-vectors.json": "ae1bdb139b1c3ee6d513f69b4e8562a8f705e505c19ba7927020171b97146781",
+    "testdata/traffic-contract/v1/decision-vectors.json": "60c3bff89fd0a819553b2f3bb548d6874fcc09feb7d58c412497293570c3d433",
+    "testdata/traffic-contract/v1/canonical-vectors.json": "eec8a1fdded0c1923ebdc2a75c0ee104a19f6c5018d2b2e7eef3bf838c20b60b",
+    "testdata/traffic-contract/v1/cumulative-vectors.json": "bde311495642f18b29266d4bece09bc829abad00da630f0b77d3e0e4767950c5",
+    "testdata/traffic-contract/v1/solver-vectors.json": "d32ffe668109f69f4e648891f9a3a8bbfba7b8150eb4e67f5e8571b0a077552e",
+    "testdata/traffic-contract/v1/valid/bootstrap/program.json": "fb33c61ff4591299ed40772471ea81b8079e39a40eb94d893b1efa6f66a6909c",
+    "testdata/traffic-contract/v1/valid/bootstrap/weights.json": "871aec502912457730451472a0136509790ee8e1d6f1d42441432466208f3fcf",
+    "testdata/traffic-contract/v1/valid/bootstrap/release.json": "570f3b8f99841702c2708e3ac091677c1077343d42b987481f0ed4988779b429",
+    "testdata/traffic-contract/v1/valid/bootstrap/source.json": "06bf155fbb1953c0a785c4bd1e83ccc76471014610a6925bd44daae4d5963cb2",
+    "testdata/traffic-contract/v1/valid/smoke-redirect-v2/program.json": "81006c2f3f01445718979ffd84e6d9b7d089a8eb5433234e7e276d9cdf078730",
+    "testdata/traffic-contract/v1/valid/smoke-redirect-v2/weights.json": "00621eae49b13ab8f15e43bbd8990334528ee8c0dece7e85c2917da1869f7f9f",
+    "testdata/traffic-contract/v1/valid/smoke-redirect-v2/release.json": "8ee6ce48e8ea78bb8a7d646b9685acaa9382ce949c91ee82e2f90d800d550a30",
+    "testdata/traffic-contract/v1/valid/smoke-redirect-v2/source.json": "0b197119205cc3741657aa82f31be4143bf2a148ea7aab0baef314cca37bdf6f",
+    "testdata/traffic-contract/v1/valid/smoke-redirect-v2/policy.json": "1db66efb551567cf9ec3fb3300c22daccdde3a45923d992600fc3d90be26d9f0",
+    "testdata/traffic-contract/v1/valid/smoke-redirect-v2/configuration.json": "1089a99ec09b292e5d724496279a685a9cc911a810527f8d04d26170979cfcd0",
+    "testdata/iso3166/alpha2.json": "8de0dc83b9c07378a18a26a04f19881121b879ba3eddf364ce2901d69deedda6",
+    "testdata/iso3166/SHA256": "79a58c5fcb9b0a8bcf9cacec77490c8fd03d0a82b365d018d652e7518c99ea6a",
+    "internal/compiler/trafficv1/pinned/MANIFEST.json": "8c64f93a807e30963d7dffd765a6d48357e42806362c26b6315d0e04d1ce01d4",
+    "internal/compiler/trafficv1/pinned/context-registry.json": "09ed065f44461dd0c7475ae8c2a01340f796d5b27c01ae3542d6dbbbf276bb5c",
+    "internal/compiler/trafficv1/pinned/content-registry.json": "a495a8f78104fdf73cf5cd1c51a2dc315166a6e6dd6b87a31826963529eb8035",
+    "internal/compiler/trafficv1/pinned/content-registry.v2.json": "19415e9a43b784f5eccb62d0d49e10f94b223d0c0f3dc898495e87e2e12ea08b",
+    "contracts/traffic/v1/content-registry.schema.json": "e1194186cf0fc4040e7ed02776363b770afff8a4ddee8e8670831b548dfffc82",
+    "contracts/traffic/v1/defs.schema.json": "86aacd2aff562c9e62c5f6f8ed1fbf4658965d0e9ac6d82cee7e939d2c11d9fb",
+    "contracts/traffic/v1/traffic-policy.schema.json": "7d6ff13f7880009836e5085b91e2d3e1a48279af18f14331fd06203e4c02a2d7",
+    "contracts/traffic/v1/traffic-program.schema.json": "90ae3c8e67654580278d8c26100042fde5e83eee79d7c86dcdcb21e19a2b4dfe"
+  },
+  "notes": [
+    "v1 bytes/SHA are frozen; URL exists only in redirect-target/2.",
+    "CONTRACT_READY is this package. ARTIFACT_READY requires a SUCCEEDED job after worker deploy."
+  ]
+}

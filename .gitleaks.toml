@@ -1,0 +1,13 @@
+title = "ta-events-ingest"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "SHA-256 content hashes in contract manifests (not secrets)"
+paths = [
+  '''testdata/.*MANIFEST\.json$''',
+  '''internal/producerhandoff/testdata/.+/MANIFEST\.json$''',
+  '''internal/producerhandoff/testdata/.+/manifest\.json$''',
+]
+regexes = ['''[a-f0-9]{64}''']

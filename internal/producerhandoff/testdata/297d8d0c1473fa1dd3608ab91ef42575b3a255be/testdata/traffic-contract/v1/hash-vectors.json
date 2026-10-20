@@ -1,0 +1,76 @@
+{
+  "algorithm": "traffic.hash.v1",
+  "totalShare": 10000,
+  "vectors": [
+    {
+      "name": "subject-1",
+      "assignmentKey": "SUBJECT_ID",
+      "assignmentValue": "subject-1",
+      "policyId": "ta-traffic-bootstrap-v1",
+      "decisionScopeId": "scenario",
+      "distributionKey": "scenario.default",
+      "salt": "scenario-v1",
+      "bodyHex": "747261666669632e686173682e763100000a5355424a4543545f494400097375626a6563742d31001774612d747261666669632d626f6f7473747261702d763100087363656e6172696f00107363656e6172696f2e64656661756c74000b7363656e6172696f2d7631",
+      "expected": {
+        "sha256": "8ea02e9466a35a8ab032292476731e85da3cc2779095cf2c0202ca705a1e001d",
+        "point": 954
+      }
+    },
+    {
+      "name": "subject-2",
+      "assignmentKey": "SUBJECT_ID",
+      "assignmentValue": "subject-2",
+      "policyId": "ta-traffic-bootstrap-v1",
+      "decisionScopeId": "scenario",
+      "distributionKey": "scenario.default",
+      "salt": "scenario-v1",
+      "bodyHex": "747261666669632e686173682e763100000a5355424a4543545f494400097375626a6563742d32001774612d747261666669632d626f6f7473747261702d763100087363656e6172696f00107363656e6172696f2e64656661756c74000b7363656e6172696f2d7631",
+      "expected": {
+        "sha256": "abdd9bad6beb18371166484cdd1cf4fcb62ddc5c7e744d7335f7a629deb26a16",
+        "point": 8791
+      }
+    },
+    {
+      "name": "present-empty",
+      "assignmentKey": "SUBJECT_ID",
+      "assignmentValue": "",
+      "policyId": "ta-traffic-bootstrap-v1",
+      "decisionScopeId": "scenario",
+      "distributionKey": "scenario.default",
+      "salt": "scenario-v1",
+      "bodyHex": "747261666669632e686173682e763100000a5355424a4543545f49440000001774612d747261666669632d626f6f7473747261702d763100087363656e6172696f00107363656e6172696f2e64656661756c74000b7363656e6172696f2d7631",
+      "expected": {
+        "sha256": "b51376eae75b20e97965388517511950fbada156bd3330ab7fd65d5adac23f01",
+        "point": 2809
+      }
+    },
+    {
+      "name": "unicode",
+      "assignmentKey": "SUBJECT_ID",
+      "assignmentValue": "субъект-1",
+      "policyId": "ta-traffic-bootstrap-v1",
+      "decisionScopeId": "scenario",
+      "distributionKey": "scenario.default",
+      "salt": "scenario-v1",
+      "bodyHex": "747261666669632e686173682e763100000a5355424a4543545f49440010d181d183d0b1d18ad0b5d0bad1822d31001774612d747261666669632d626f6f7473747261702d763100087363656e6172696f00107363656e6172696f2e64656661756c74000b7363656e6172696f2d7631",
+      "expected": {
+        "sha256": "2b1a662938049d48e47999204b2c4b399c26fe5848f11e56f554ee1c6868b083",
+        "point": 7096
+      }
+    },
+    {
+      "name": "request-id",
+      "assignmentKey": "REQUEST_ID",
+      "assignmentValue": "req-1",
+      "policyId": "ta-traffic-bootstrap-v1",
+      "decisionScopeId": "landing.skin",
+      "distributionKey": "landing.skin.default",
+      "salt": "skin-v1",
+      "bodyHex": "747261666669632e686173682e763100000a524551554553545f494400057265712d31001774612d747261666669632d626f6f7473747261702d7631000c6c616e64696e672e736b696e00146c616e64696e672e736b696e2e64656661756c740007736b696e2d7631",
+      "expected": {
+        "sha256": "ebe4d45be47f87de7387756cf3b80611c87f3360e6a7798d7299374ab2e77a22",
+        "point": 78
+      }
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "registryVersion": 1,
+  "fields": [
+    {
+      "id": "country",
+      "valueType": "STRING",
+      "operators": [
+        "EQ",
+        "IN",
+        "EXISTS"
+      ]
+    },
+    {
+      "id": "region",
+      "valueType": "STRING",
+      "operators": [
+        "EQ",
+        "IN",
+        "EXISTS"
+      ]
+    },
+    {
+      "id": "city",
+      "valueType": "STRING",
+      "operators": [
+        "EQ",
+        "IN",
+        "EXISTS"
+      ]
+    },
+    {
+      "id": "metroCode",
+      "valueType": "STRING",
+      "operators": [
+        "EQ",
+        "IN",
+        "EXISTS"
+      ]
+    },
+    {
+      "id": "deviceType",
+      "valueType": "ENUM",
+      "operators": [
+        "EQ",
+        "IN"
+      ],
+      "enum": [
+        "mobile",
+        "tablet",
+        "desktop",
+        "unknown"
+      ]
+    },
+    {
+      "id": "os",
+      "valueType": "ENUM",
+      "operators": [
+        "EQ",
+        "IN"
+      ],
+      "enum": [
+        "ios",
+        "android",
+        "windows",
+        "macos",
+        "linux",
+        "unknown"
+      ]
+    },
+    {
+      "id": "browser",
+      "valueType": "ENUM",
+      "operators": [
+        "EQ",
+        "IN"
+      ],
+      "enum": [
+        "chrome",
+        "safari",
+        "firefox",
+        "edge",
+        "opera",
+        "samsung",
+        "unknown"
+      ]
+    },
+    {
+      "id": "isBot",
+      "valueType": "BOOLEAN",
+      "operators": [
+        "EQ"
+      ]
+    },
+    {
+      "id": "ta_source",
+      "valueType": "STRING",
+      "operators": [
+        "EQ",
+        "IN",
+        "EXISTS"
+      ]
+    },
+    {
+      "id": "ta_sub",
+      "valueType": "STRING",
+      "operators": [
+        "EQ",
+        "IN",
+        "EXISTS"
+      ]
+    }
+  ]
+}

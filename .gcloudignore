@@ -1,0 +1,11 @@
+.git
+.github
+edge
+docs
+*.md
+bin
+dist
+.wrangler
+**/*_test.go
+gha-creds-*.json
+.gcloudignore

@@ -1,0 +1,15 @@
+{
+  "configurationRevision": "configuration.smoke-redirect-v2.1",
+  "trafficPolicyRevision": "policy.smoke-redirect-v2.1",
+  "trafficSignalsRevision": "signals.smoke-redirect-v2.1",
+  "trafficBoundsRevision": "bounds.smoke-redirect-v2.1",
+  "trafficFixRevision": "fix.smoke-redirect-v2.1",
+  "contextRegistryVersion": 1,
+  "contentRegistryVersion": 2,
+  "modelVersion": "traffic.model.v1",
+  "sourceWindow": {
+    "start": "2026-08-31T00:00:00Z",
+    "end": "2026-08-31T00:05:00Z",
+    "watermark": "2026-08-31T00:05:00Z"
+  }
+}

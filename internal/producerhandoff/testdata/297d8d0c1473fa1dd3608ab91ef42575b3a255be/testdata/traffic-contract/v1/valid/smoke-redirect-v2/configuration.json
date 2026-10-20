@@ -1,0 +1,305 @@
+{
+  "scenarios": [
+    {
+      "id": "landing",
+      "kind": "render",
+      "status": "ACTIVE",
+      "topologyId": "landing.topology"
+    },
+    {
+      "id": "redirect",
+      "kind": "redirect",
+      "status": "ACTIVE",
+      "topologyId": "redirect.topology"
+    }
+  ],
+  "topologies": [
+    {
+      "id": "landing.topology",
+      "status": "ACTIVE",
+      "bindings": [
+        {
+          "slotId": "skin",
+          "poolId": "skin.pool",
+          "required": true
+        },
+        {
+          "slotId": "gallery",
+          "poolId": "gallery.pool",
+          "required": true
+        },
+        {
+          "slotId": "handoff.from_landing",
+          "poolId": "dsp.pool",
+          "required": true
+        },
+        {
+          "slotId": "handoff.from_mirror_1",
+          "poolId": "dsp.pool",
+          "required": true
+        },
+        {
+          "slotId": "handoff.from_mirror_2",
+          "poolId": "dsp.pool",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "redirect.topology",
+      "status": "ACTIVE",
+      "bindings": [
+        {
+          "slotId": "target",
+          "poolId": "target.pool",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "gallery",
+      "status": "ACTIVE",
+      "accepts": {
+        "typeId": "landing-gallery",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "id": "handoff.from_landing",
+      "status": "ACTIVE",
+      "accepts": {
+        "typeId": "dsp-handoff",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "id": "handoff.from_mirror_1",
+      "status": "ACTIVE",
+      "accepts": {
+        "typeId": "dsp-handoff",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "id": "handoff.from_mirror_2",
+      "status": "ACTIVE",
+      "accepts": {
+        "typeId": "dsp-handoff",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "id": "skin",
+      "status": "ACTIVE",
+      "accepts": {
+        "typeId": "landing-skin",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "id": "target",
+      "status": "ACTIVE",
+      "accepts": {
+        "typeId": "redirect-target",
+        "schemaVersion": 2
+      }
+    }
+  ],
+  "pools": [
+    {
+      "id": "dsp.pool",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "dsp-handoff",
+        "schemaVersion": 1
+      },
+      "variantIds": [
+        "disabled_dsp"
+      ]
+    },
+    {
+      "id": "gallery.pool",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-gallery",
+        "schemaVersion": 1
+      },
+      "variantIds": [
+        "home-kitchen",
+        "home-sauna-swimwear",
+        "home-sauna-towel-wave",
+        "kitchen-swimwear"
+      ]
+    },
+    {
+      "id": "skin.pool",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-skin",
+        "schemaVersion": 1
+      },
+      "variantIds": [
+        "glass_right_form",
+        "minimal_center",
+        "velvet_left_form"
+      ]
+    },
+    {
+      "id": "target.pool",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "redirect-target",
+        "schemaVersion": 2
+      },
+      "variantIds": [
+        "disabled_target",
+        "smartlink-main"
+      ]
+    }
+  ],
+  "variantTypes": [
+    {
+      "typeId": "dsp-handoff",
+      "schemaVersion": 1,
+      "status": "ACTIVE"
+    },
+    {
+      "typeId": "landing-gallery",
+      "schemaVersion": 1,
+      "status": "ACTIVE"
+    },
+    {
+      "typeId": "landing-skin",
+      "schemaVersion": 1,
+      "status": "ACTIVE"
+    },
+    {
+      "typeId": "redirect-target",
+      "schemaVersion": 1,
+      "status": "ACTIVE"
+    },
+    {
+      "typeId": "redirect-target",
+      "schemaVersion": 2,
+      "status": "ACTIVE"
+    }
+  ],
+  "variants": [
+    {
+      "id": "disabled_dsp",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "dsp-handoff",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "dspId": "disabled_dsp",
+        "enabled": false
+      }
+    },
+    {
+      "id": "disabled_target",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "redirect-target",
+        "schemaVersion": 2
+      },
+      "payload": {
+        "targetId": "disabled_target",
+        "enabled": false
+      }
+    },
+    {
+      "id": "home-kitchen",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-gallery",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "galleryId": "home-kitchen"
+      }
+    },
+    {
+      "id": "home-sauna-swimwear",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-gallery",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "galleryId": "home-sauna-swimwear"
+      }
+    },
+    {
+      "id": "home-sauna-towel-wave",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-gallery",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "galleryId": "home-sauna-towel-wave"
+      }
+    },
+    {
+      "id": "kitchen-swimwear",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-gallery",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "galleryId": "kitchen-swimwear"
+      }
+    },
+    {
+      "id": "glass_right_form",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-skin",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "skinId": "glass_right_form"
+      }
+    },
+    {
+      "id": "minimal_center",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-skin",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "skinId": "minimal_center"
+      }
+    },
+    {
+      "id": "velvet_left_form",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "landing-skin",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "skinId": "velvet_left_form"
+      }
+    },
+    {
+      "id": "smartlink-main",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "redirect-target",
+        "schemaVersion": 2
+      },
+      "payload": {
+        "targetId": "smartlink-main",
+        "enabled": true,
+        "url": "https://example.com/?campaign=contract-smoke"
+      }
+    }
+  ]
+}

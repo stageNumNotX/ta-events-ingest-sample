@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 1,
+  "policyId": "ta-traffic-hotlink-macros-v1",
+  "compileTarget": "traffic-runtime/v1",
+  "contextRegistryVersion": 1,
+  "contentRegistryVersion": 1,
+  "fixture": "valid",
+  "hashSkipped": "single-positive-choice",
+  "coverage": {
+    "fields": {
+      "ta_source": {
+        "valueType": "STRING",
+        "operators": [
+          "EQ",
+          "IN",
+          "EXISTS"
+        ]
+      },
+      "ta_sub": {
+        "valueType": "STRING",
+        "operators": [
+          "EQ",
+          "IN",
+          "EXISTS"
+        ]
+      }
+    },
+    "combinators": [
+      "ALL",
+      "ANY",
+      "NOT"
+    ],
+    "outOfScope": [
+      "m_campaign",
+      "m_country"
+    ]
+  },
+  "pin": {
+    "oracle": "producer",
+    "digestFile": "testdata/traffic-contract/hotlink-macros/DIGEST",
+    "manifest": "testdata/traffic-contract/hotlink-macros/MANIFEST.json",
+    "producerRepo": "stageNumNotX/compiler-service",
+    "files": [
+      "decision-vectors.json",
+      "valid/program.json",
+      "valid/weights.json",
+      "valid/release.json"
+    ],
+    "produce": [
+      "python3 tools/traffic-contract/reference_vectors.py --write",
+      "TRAFFIC_WRITE_GOLDENS=1 go test ./internal/compiler/trafficv1/ -count=1 -run TestHotlinkMacrosCompile",
+      "python3 tools/traffic-contract/reference_vectors.py --write",
+      "python3 tools/traffic-contract/export_q_macro.py",
+      "python3 tools/traffic-contract/reference_vectors.py --check",
+      "python3 tools/traffic-contract/verify_q_macro.py"
+    ]
+  },
+  "cases": [
+    {
+      "name": "ta_source_eq_positive",
+      "polarity": "positive",
+      "covers": [
+        "ta_source.EQ"
+      ],
+      "context": {
+        "ta_source": "ads"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-source-eq-ads",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_eq_wins_over_sub",
+      "polarity": "positive",
+      "covers": [
+        "ta_source.EQ",
+        "first-match"
+      ],
+      "context": {
+        "ta_source": "ads",
+        "ta_sub": "main"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-source-eq-ads",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_eq_negative_case",
+      "polarity": "negative",
+      "covers": [
+        "ta_source.EQ"
+      ],
+      "context": {
+        "ta_source": "ADS"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-unblocked-source",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_in_positive_a",
+      "polarity": "positive",
+      "covers": [
+        "ta_source.IN"
+      ],
+      "context": {
+        "ta_source": "partner-a"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-source-in-partners",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_in_positive_b",
+      "polarity": "positive",
+      "covers": [
+        "ta_source.IN"
+      ],
+      "context": {
+        "ta_source": "partner-b"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-source-in-partners",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_in_negative",
+      "polarity": "negative",
+      "covers": [
+        "ta_source.IN"
+      ],
+      "context": {
+        "ta_source": "partner-c"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-unblocked-source",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_sub_eq_positive",
+      "polarity": "positive",
+      "covers": [
+        "ta_sub.EQ"
+      ],
+      "context": {
+        "ta_sub": "main"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-sub-eq-main",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_sub_eq_negative_case",
+      "polarity": "negative",
+      "covers": [
+        "ta_sub.EQ"
+      ],
+      "context": {
+        "ta_sub": "MAIN"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-sub-exists",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_sub_in_positive_alpha",
+      "polarity": "positive",
+      "covers": [
+        "ta_sub.IN"
+      ],
+      "context": {
+        "ta_sub": "alpha"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-sub-in-tags",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_sub_in_positive_beta",
+      "polarity": "positive",
+      "covers": [
+        "ta_sub.IN"
+      ],
+      "context": {
+        "ta_sub": "beta"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-sub-in-tags",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_sub_in_negative",
+      "polarity": "negative",
+      "covers": [
+        "ta_sub.IN"
+      ],
+      "context": {
+        "ta_sub": "gamma"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-sub-exists",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_all_positive",
+      "polarity": "positive",
+      "covers": [
+        "ALL",
+        "ta_source.EQ",
+        "ta_sub.EQ"
+      ],
+      "context": {
+        "ta_source": "combo-src",
+        "ta_sub": "combo-sub"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-all-combo",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_all_negative_missing_sub",
+      "polarity": "negative",
+      "covers": [
+        "ALL"
+      ],
+      "context": {
+        "ta_source": "combo-src"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-unblocked-source",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_all_negative_missing_source",
+      "polarity": "negative",
+      "covers": [
+        "ALL"
+      ],
+      "context": {
+        "ta_sub": "combo-sub"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-sub-exists",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_any_positive_source",
+      "polarity": "positive",
+      "covers": [
+        "ANY"
+      ],
+      "context": {
+        "ta_source": "any-src"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-any-src-or-sub",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_any_positive_sub",
+      "polarity": "positive",
+      "covers": [
+        "ANY"
+      ],
+      "context": {
+        "ta_sub": "any-sub"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-any-src-or-sub",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_any_negative",
+      "polarity": "negative",
+      "covers": [
+        "ANY"
+      ],
+      "context": {
+        "ta_source": "nope",
+        "ta_sub": "nope"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-unblocked-source",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_not_positive_unblocked",
+      "polarity": "positive",
+      "covers": [
+        "NOT",
+        "ta_source.EXISTS"
+      ],
+      "context": {
+        "ta_source": "ok"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-unblocked-source",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "hotlink_not_negative_blocked",
+      "polarity": "negative",
+      "covers": [
+        "NOT",
+        "ta_source.EXISTS"
+      ],
+      "context": {
+        "ta_source": "blocked"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-source-exists",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_exists_positive_empty",
+      "polarity": "positive",
+      "covers": [
+        "ta_source.EXISTS"
+      ],
+      "context": {
+        "ta_source": ""
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-unblocked-source",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_exists_negative_absent",
+      "polarity": "negative",
+      "covers": [
+        "ta_source.EXISTS",
+        "ta_sub.EXISTS"
+      ],
+      "context": {},
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": null,
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_sub_exists_positive",
+      "polarity": "positive",
+      "covers": [
+        "ta_sub.EXISTS"
+      ],
+      "context": {
+        "ta_sub": "other"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "ta-sub-exists",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "ta_source_slot_eq_positive",
+      "polarity": "positive",
+      "covers": [
+        "ta_source.EQ",
+        "slot.ta_source.EQ"
+      ],
+      "context": {
+        "ta_source": "slot-src"
+      },
+      "assignmentPresent": true,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "hotlink-unblocked-source",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": "ta-source-eq-slot"
+          }
+        ]
+      },
+      "assignmentValue": "subject-1"
+    },
+    {
+      "name": "assignment_missing_skips_matchers",
+      "polarity": "negative",
+      "covers": [
+        "SUBJECT_ID_MISSING"
+      ],
+      "context": {
+        "ta_source": "ads"
+      },
+      "assignmentPresent": false,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": null,
+        "fallbackReasons": [
+          "SUBJECT_ID_MISSING",
+          "SUBJECT_ID_MISSING"
+        ],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      }
+    }
+  ]
+}

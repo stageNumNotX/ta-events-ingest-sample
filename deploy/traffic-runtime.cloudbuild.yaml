@@ -1,0 +1,24 @@
+# Cloud Build for cmd/traffic-runtime. Never build/push cmd/server from this file.
+substitutions:
+  _IMAGE: europe-west1-docker.pkg.dev/${PROJECT_ID}/ta-traffic-runtime/runtime:dev
+  _REVISION: unknown
+timeout: 900s
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -f
+      - Dockerfile.traffic-runtime
+      - --build-arg
+      - REVISION=${_REVISION}
+      - -t
+      - ${_IMAGE}
+      - --label
+      - org.opencontainers.image.revision=${_REVISION}
+      - --label
+      - org.opencontainers.image.source=https://github.com/stageNumNotX/ta-events-ingest
+      - .
+images:
+  - ${_IMAGE}
+options:
+  logging: CLOUD_LOGGING_ONLY

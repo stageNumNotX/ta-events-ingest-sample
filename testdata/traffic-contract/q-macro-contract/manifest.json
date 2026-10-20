@@ -1,0 +1,53 @@
+{
+  "package": "q-macro-contract",
+  "oracle": "producer",
+  "oracleDigest": "eddc83fd05225ec71368f4570fce593f30a2d9bef3b8a1abc4981ad6686208f5",
+  "oracleFiles": [
+    "decision-vectors.json",
+    "valid/program.json",
+    "valid/weights.json",
+    "valid/release.json"
+  ],
+  "digestFile": "DIGEST",
+  "digestLabel": "q-macro-contract",
+  "producerRepo": "stageNumNotX/compiler-service",
+  "contract": {
+    "compileTarget": "traffic-runtime/v1",
+    "contextRegistryVersion": 1,
+    "contentRegistryVersion": 1,
+    "policyId": "ta-traffic-hotlink-macros-v1",
+    "fields": [
+      "ta_source",
+      "ta_sub"
+    ],
+    "operators": [
+      "EQ",
+      "IN",
+      "EXISTS"
+    ],
+    "combinators": [
+      "ALL",
+      "ANY",
+      "NOT"
+    ]
+  },
+  "files": {
+    "testdata/traffic-contract/hotlink-macros/DIGEST": "74b1260e6df5bf9f19e48ac7f4ee8b013a421fa93de3a8065075057ab87b57c3",
+    "testdata/traffic-contract/hotlink-macros/MANIFEST.json": "4aff3fa772209568019f8788cdd1d03a845423fca4b64662728c68eddbc7f55e",
+    "testdata/traffic-contract/hotlink-macros/decision-vectors.json": "b84e8f86c132c6f701ede101744c79279e2db19a37d4d7bd5d21872543b7ebab",
+    "testdata/traffic-contract/hotlink-macros/valid/bounds.json": "0176f41a5df7e26a8a09081d2e925a041d52ac8a48c70f33833bc4d581382ff9",
+    "testdata/traffic-contract/hotlink-macros/valid/configuration.json": "2739e26ae69b96150bd2eba738122368e633a47b85cdede122cb9b2c06961c1c",
+    "testdata/traffic-contract/hotlink-macros/valid/fix.json": "eecbd0f978fdc218eeeebf74511acc318c055966c67d4f458b5ccc35a3f367bd",
+    "testdata/traffic-contract/hotlink-macros/valid/policy.json": "e6576898595aef2b99a2ae8eaa8f5b4dba38573c92a033c32a88c170accc6f81",
+    "testdata/traffic-contract/hotlink-macros/valid/program.json": "592439be9decb596f40b03d6c7ecaba035fc2df0ab597c77bd40379982c1b3ff",
+    "testdata/traffic-contract/hotlink-macros/valid/release.json": "aef5ecbfd3035a00541a11661cdb5adeb478505286658b917ded90866198b370",
+    "testdata/traffic-contract/hotlink-macros/valid/signals.json": "181401e2b9bac1dd49a47e433063ff3705867b250b6e86eb2be58ab6ed36a9c3",
+    "testdata/traffic-contract/hotlink-macros/valid/source.json": "b6066d3bf59ab4af4fd15e27e2f84a1a87333fb03837ac135412c02ded1e704a",
+    "testdata/traffic-contract/hotlink-macros/valid/weights.json": "e088220c3ccf7eb8df22a99f08fd39da284af1a075d9ded3871b206aac15de9d"
+  },
+  "notes": [
+    "Producer is the sole oracle. Pin oracleDigest. Git SHA is provenance only.",
+    "Consumer must run these same cases[] against the digest. Local consumer fixtures do not close Q-MACRO-CONTRACT.",
+    "Out of scope: m_campaign, m_country, Activate-for-Activate, serving rebind."
+  ]
+}

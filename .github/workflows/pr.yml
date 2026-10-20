@@ -1,0 +1,31 @@
+name: PR checks
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Format
+        run: test -z "$(gofmt -l .)"
+      - name: Vet
+        run: go vet ./...
+      - name: Test
+        run: go test -race ./...
+      - name: Events pull evaluator
+        run: python3 scripts/traffic-runtime-events-eval.py --self-test
+      - name: T11 BQ gate evaluator
+        run: python3 scripts/traffic-runtime-t11-eval.py --self-test
+      - name: Build traffic-runtime
+        run: go build -o /tmp/traffic-runtime ./cmd/traffic-runtime
+      - name: Build ingest (regression)
+        run: go build -o /tmp/server ./cmd/server

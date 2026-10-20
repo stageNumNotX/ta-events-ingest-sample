@@ -1,0 +1,15 @@
+{
+  "configurationRevision": "configuration.hotlink-macros.1",
+  "trafficPolicyRevision": "policy.hotlink-macros.1",
+  "trafficSignalsRevision": "signals.hotlink-macros.1",
+  "trafficBoundsRevision": "bounds.hotlink-macros.1",
+  "trafficFixRevision": "fix.hotlink-macros.1",
+  "contextRegistryVersion": 1,
+  "contentRegistryVersion": 1,
+  "modelVersion": "traffic.model.v1",
+  "sourceWindow": {
+    "start": "2026-08-31T00:00:00Z",
+    "end": "2026-08-31T00:05:00Z",
+    "watermark": "2026-08-31T00:05:00Z"
+  }
+}

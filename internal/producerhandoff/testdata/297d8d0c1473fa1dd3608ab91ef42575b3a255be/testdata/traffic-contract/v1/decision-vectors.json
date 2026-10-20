@@ -1,0 +1,271 @@
+{
+  "policyId": "ta-traffic-bootstrap-v1",
+  "cases": [
+    {
+      "name": "bot-redirects",
+      "context": {
+        "isBot": true,
+        "country": "RU",
+        "deviceType": "mobile"
+      },
+      "assignmentPresent": true,
+      "assignmentValue": "subject-1",
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": "bots-redirect",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "ru-mobile-independent-slots",
+      "context": {
+        "isBot": false,
+        "country": "RU",
+        "deviceType": "mobile"
+      },
+      "assignmentPresent": true,
+      "assignmentValue": "subject-1",
+      "expected": {
+        "scenarioId": "landing",
+        "matchedScenarioRuleId": "ru-landing-only",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "gallery",
+            "variantId": "home-sauna-swimwear",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_landing",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_1",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_2",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "skin",
+            "variantId": "minimal_center",
+            "matchedRuleId": "mobile-minimal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ru-desktop-skin-hashed",
+      "context": {
+        "isBot": false,
+        "country": "RU",
+        "deviceType": "desktop"
+      },
+      "assignmentPresent": true,
+      "assignmentValue": "subject-1",
+      "expected": {
+        "scenarioId": "landing",
+        "matchedScenarioRuleId": "ru-landing-only",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "gallery",
+            "variantId": "home-sauna-swimwear",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_landing",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_1",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_2",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "skin",
+            "variantId": "velvet_left_form",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "points": {
+        "skin": 9266,
+        "gallery": 4971
+      }
+    },
+    {
+      "name": "default-hashed-scenario",
+      "context": {
+        "isBot": false,
+        "country": "US",
+        "deviceType": "desktop"
+      },
+      "assignmentPresent": true,
+      "assignmentValue": "subject-1",
+      "expected": {
+        "scenarioId": "landing",
+        "matchedScenarioRuleId": null,
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "gallery",
+            "variantId": "home-sauna-swimwear",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_landing",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_1",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_2",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "skin",
+            "variantId": "velvet_left_form",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "points": {
+        "scenario": 954
+      }
+    },
+    {
+      "name": "subject-missing",
+      "context": {
+        "isBot": false,
+        "country": "RU",
+        "deviceType": "desktop"
+      },
+      "assignmentPresent": false,
+      "expected": {
+        "scenarioId": "redirect",
+        "matchedScenarioRuleId": null,
+        "fallbackReasons": [
+          "SUBJECT_ID_MISSING",
+          "SUBJECT_ID_MISSING"
+        ],
+        "selections": [
+          {
+            "slotId": "target",
+            "variantId": "disabled_target",
+            "matchedRuleId": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "present-empty-is-hashed",
+      "context": {
+        "isBot": false,
+        "country": "US",
+        "deviceType": "desktop"
+      },
+      "assignmentPresent": true,
+      "assignmentValue": "",
+      "expected": {
+        "scenarioId": "landing",
+        "matchedScenarioRuleId": null,
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "gallery",
+            "variantId": "home-sauna-towel-wave",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_landing",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_1",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_2",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "skin",
+            "variantId": "glass_right_form",
+            "matchedRuleId": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "subject-2-gallery",
+      "context": {
+        "isBot": false,
+        "country": "RU",
+        "deviceType": "desktop"
+      },
+      "assignmentPresent": true,
+      "assignmentValue": "subject-2",
+      "expected": {
+        "scenarioId": "landing",
+        "matchedScenarioRuleId": "ru-landing-only",
+        "fallbackReasons": [],
+        "selections": [
+          {
+            "slotId": "gallery",
+            "variantId": "home-sauna-towel-wave",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_landing",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_1",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "handoff.from_mirror_2",
+            "variantId": "disabled_dsp",
+            "matchedRuleId": null
+          },
+          {
+            "slotId": "skin",
+            "variantId": "glass_right_form",
+            "matchedRuleId": null
+          }
+        ]
+      },
+      "points": {
+        "gallery": 7201
+      }
+    }
+  ]
+}

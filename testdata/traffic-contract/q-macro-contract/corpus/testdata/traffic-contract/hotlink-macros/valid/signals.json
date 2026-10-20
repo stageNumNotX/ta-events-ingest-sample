@@ -1,0 +1,70 @@
+{
+  "revisionId": "signals.hotlink-macros.1",
+  "sourceWindow": {
+    "start": "2026-08-31T00:00:00Z",
+    "end": "2026-08-31T00:05:00Z",
+    "watermark": "2026-08-31T00:05:00Z"
+  },
+  "rows": [
+    {
+      "distributionKey": "redirect.target.default",
+      "choiceId": "disabled_target",
+      "score": 1
+    },
+    {
+      "distributionKey": "redirect.target.rule.ta-source-eq-slot",
+      "choiceId": "disabled_target",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.default",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-all-combo",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-any-src-or-sub",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.hotlink-unblocked-source",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-eq-ads",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-exists",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.ta-source-in-partners",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-eq-main",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-exists",
+      "choiceId": "redirect",
+      "score": 1
+    },
+    {
+      "distributionKey": "scenario.rule.ta-sub-in-tags",
+      "choiceId": "redirect",
+      "score": 1
+    }
+  ]
+}

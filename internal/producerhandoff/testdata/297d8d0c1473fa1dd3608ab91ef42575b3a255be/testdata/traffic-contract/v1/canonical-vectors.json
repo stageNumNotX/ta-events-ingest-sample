@@ -1,0 +1,5 @@
+{
+  "notes": "Go production encoder is authoritative for Program/Weights/Release bytes. These rows pin oracle helpers only.",
+  "hashPrefixHex": "747261666669632e686173682e763100",
+  "totalShare": 10000
+}

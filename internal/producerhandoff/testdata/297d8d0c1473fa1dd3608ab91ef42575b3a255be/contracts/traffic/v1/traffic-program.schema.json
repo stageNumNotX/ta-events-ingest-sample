@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://compiler-service.local/contracts/traffic/v1/traffic-program.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "artifactType",
+    "compileTarget",
+    "layoutId",
+    "totalShare",
+    "hashAlgorithm",
+    "policyId",
+    "contextRegistryVersion",
+    "contentRegistryVersion",
+    "scenarios",
+    "variants",
+    "vectors",
+    "scenarioProgram",
+    "slotPrograms"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "artifactType": { "const": "traffic-program/v1" },
+    "compileTarget": { "$ref": "defs.schema.json#/$defs/compileTarget" },
+    "layoutId": { "$ref": "defs.schema.json#/$defs/sha256Hex" },
+    "totalShare": { "const": 10000 },
+    "hashAlgorithm": { "const": "traffic.hash.v1" },
+    "policyId": { "$ref": "defs.schema.json#/$defs/identity" },
+    "contextRegistryVersion": { "const": 1 },
+    "contentRegistryVersion": { "enum": [1, 2] },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": { "$ref": "defs.schema.json#/$defs/scenarioWire" }
+    },
+    "variants": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 65535,
+      "items": { "$ref": "defs.schema.json#/$defs/variantWire" }
+    },
+    "vectors": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 65535,
+      "items": { "$ref": "defs.schema.json#/$defs/vectorLayoutWire" }
+    },
+    "scenarioProgram": { "$ref": "defs.schema.json#/$defs/compiledDecisionProgram" },
+    "slotPrograms": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": { "$ref": "defs.schema.json#/$defs/compiledSlotProgram" }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "scenarios": [
+    {
+      "id": "redirect",
+      "kind": "redirect",
+      "status": "ACTIVE",
+      "topologyId": "redirect.topology"
+    }
+  ],
+  "topologies": [
+    {
+      "id": "redirect.topology",
+      "status": "ACTIVE",
+      "bindings": [
+        {
+          "slotId": "target",
+          "poolId": "target.pool",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "target",
+      "status": "ACTIVE",
+      "accepts": {
+        "typeId": "redirect-target",
+        "schemaVersion": 1
+      }
+    }
+  ],
+  "pools": [
+    {
+      "id": "target.pool",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "redirect-target",
+        "schemaVersion": 1
+      },
+      "variantIds": [
+        "disabled_target"
+      ]
+    }
+  ],
+  "variantTypes": [
+    {
+      "typeId": "redirect-target",
+      "schemaVersion": 1,
+      "status": "ACTIVE"
+    }
+  ],
+  "variants": [
+    {
+      "id": "disabled_target",
+      "status": "ACTIVE",
+      "type": {
+        "typeId": "redirect-target",
+        "schemaVersion": 1
+      },
+      "payload": {
+        "targetId": "disabled_target",
+        "enabled": false
+      }
+    }
+  ]
+}

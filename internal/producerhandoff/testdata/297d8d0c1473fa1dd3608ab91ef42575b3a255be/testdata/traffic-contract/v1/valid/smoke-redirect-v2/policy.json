@@ -1,0 +1,188 @@
+{
+  "revisionId": "policy.smoke-redirect-v2.1",
+  "policyId": "ta-traffic-smoke-redirect-v2",
+  "configurationRevision": "configuration.smoke-redirect-v2.1",
+  "contextRegistryVersion": 1,
+  "contentRegistryVersion": 2,
+  "scenarioKinds": [
+    {
+      "scenarioId": "landing",
+      "kind": "render"
+    },
+    {
+      "scenarioId": "redirect",
+      "kind": "redirect"
+    }
+  ],
+  "scenarioProgram": {
+    "decisionScopeId": "scenario",
+    "assignmentKey": "SUBJECT_ID",
+    "salt": "scenario-v1",
+    "missingAssignmentChoiceId": "redirect",
+    "rules": [
+      {
+        "ruleId": "bots-redirect",
+        "when": {
+          "op": "CONDITION",
+          "field": "isBot",
+          "operator": "EQ",
+          "value": true
+        },
+        "branch": {
+          "distributionKey": "scenario.rule.bots-redirect",
+          "choiceIds": [
+            "redirect"
+          ]
+        }
+      },
+      {
+        "ruleId": "ru-landing-only",
+        "when": {
+          "op": "CONDITION",
+          "field": "country",
+          "operator": "EQ",
+          "value": "RU"
+        },
+        "branch": {
+          "distributionKey": "scenario.rule.ru-landing-only",
+          "choiceIds": [
+            "landing"
+          ]
+        }
+      }
+    ],
+    "defaultBranch": {
+      "distributionKey": "scenario.default",
+      "choiceIds": [
+        "landing",
+        "redirect"
+      ]
+    }
+  },
+  "slotPrograms": [
+    {
+      "scenarioId": "landing",
+      "slotId": "gallery",
+      "program": {
+        "decisionScopeId": "landing.gallery",
+        "assignmentKey": "SUBJECT_ID",
+        "salt": "gallery-v1",
+        "missingAssignmentChoiceId": "home-kitchen",
+        "rules": [],
+        "defaultBranch": {
+          "distributionKey": "landing.gallery.default",
+          "choiceIds": [
+            "home-kitchen",
+            "home-sauna-swimwear",
+            "home-sauna-towel-wave",
+            "kitchen-swimwear"
+          ]
+        }
+      }
+    },
+    {
+      "scenarioId": "landing",
+      "slotId": "handoff.from_landing",
+      "program": {
+        "decisionScopeId": "landing.handoff.from_landing",
+        "assignmentKey": "SUBJECT_ID",
+        "salt": "handoff-v1",
+        "missingAssignmentChoiceId": "disabled_dsp",
+        "rules": [],
+        "defaultBranch": {
+          "distributionKey": "landing.handoff.from_landing.default",
+          "choiceIds": [
+            "disabled_dsp"
+          ]
+        }
+      }
+    },
+    {
+      "scenarioId": "landing",
+      "slotId": "handoff.from_mirror_1",
+      "program": {
+        "decisionScopeId": "landing.handoff.from_mirror_1",
+        "assignmentKey": "SUBJECT_ID",
+        "salt": "handoff-v1",
+        "missingAssignmentChoiceId": "disabled_dsp",
+        "rules": [],
+        "defaultBranch": {
+          "distributionKey": "landing.handoff.from_mirror_1.default",
+          "choiceIds": [
+            "disabled_dsp"
+          ]
+        }
+      }
+    },
+    {
+      "scenarioId": "landing",
+      "slotId": "handoff.from_mirror_2",
+      "program": {
+        "decisionScopeId": "landing.handoff.from_mirror_2",
+        "assignmentKey": "SUBJECT_ID",
+        "salt": "handoff-v1",
+        "missingAssignmentChoiceId": "disabled_dsp",
+        "rules": [],
+        "defaultBranch": {
+          "distributionKey": "landing.handoff.from_mirror_2.default",
+          "choiceIds": [
+            "disabled_dsp"
+          ]
+        }
+      }
+    },
+    {
+      "scenarioId": "landing",
+      "slotId": "skin",
+      "program": {
+        "decisionScopeId": "landing.skin",
+        "assignmentKey": "SUBJECT_ID",
+        "salt": "skin-v1",
+        "missingAssignmentChoiceId": "velvet_left_form",
+        "rules": [
+          {
+            "ruleId": "mobile-minimal",
+            "when": {
+              "op": "CONDITION",
+              "field": "deviceType",
+              "operator": "EQ",
+              "value": "mobile"
+            },
+            "branch": {
+              "distributionKey": "landing.skin.rule.mobile-minimal",
+              "choiceIds": [
+                "minimal_center"
+              ]
+            }
+          }
+        ],
+        "defaultBranch": {
+          "distributionKey": "landing.skin.default",
+          "choiceIds": [
+            "glass_right_form",
+            "minimal_center",
+            "velvet_left_form"
+          ]
+        }
+      }
+    },
+    {
+      "scenarioId": "redirect",
+      "slotId": "target",
+      "program": {
+        "decisionScopeId": "redirect.target",
+        "assignmentKey": "SUBJECT_ID",
+        "salt": "target-v1",
+        "missingAssignmentChoiceId": "disabled_target",
+        "rules": [],
+        "defaultBranch": {
+          "distributionKey": "redirect.target.default",
+          "choiceIds": [
+            "disabled_target",
+            "smartlink-main"
+          ]
+        }
+      }
+    }
+  ]
+}

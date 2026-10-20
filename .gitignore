@@ -1,0 +1,33 @@
+# Go
+/bin/
+/dist/
+*.exe
+*.test
+*.out
+vendor/
+
+# Env / secrets — never commit real values
+.env
+.env.*
+!.env.example
+.local.env
+*.local
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Cloud / build
+*.log
+coverage.*
+# Written into the workspace by google-github-actions/auth; never commit or pack.
+gha-creds-*.json
+
+# Runtime-generated probe evidence and fetched artifacts
+docs/traffic-runtime/evidence/
+docker-pinned/**
+!docker-pinned/.gitkeep
+
+# Cloudflare Worker local cache
+.wrangler/

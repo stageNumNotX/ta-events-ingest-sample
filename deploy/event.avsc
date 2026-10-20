@@ -1,0 +1,33 @@
+{
+  "type": "record",
+  "name": "Event",
+  "namespace": "ta.events",
+  "doc": "Каноническое событие трафика ta-events-ingest. Все поля — string без union-с-null: при JSON-кодировании это обычный JSON без Avro-обёрток. Поля event_time/received_at — RFC3339 (микросекунды) для BigQuery TIMESTAMP; headers/cf/params/raw — экранированный JSON-текст для BigQuery JSON-колонок.",
+  "fields": [
+    { "name": "event_id", "type": "string", "default": "" },
+    { "name": "event_name", "type": "string", "default": "" },
+    { "name": "event_time", "type": "string", "default": "" },
+    { "name": "received_at", "type": "string", "default": "" },
+    { "name": "click_id", "type": "string", "default": "" },
+    { "name": "country", "type": "string", "default": "" },
+    { "name": "path", "type": "string", "default": "" },
+    { "name": "search", "type": "string", "default": "" },
+    { "name": "ta_source", "type": "string", "default": "" },
+    { "name": "ta_sub", "type": "string", "default": "" },
+    { "name": "user_agent", "type": "string", "default": "" },
+    { "name": "ip_hash", "type": "string", "default": "" },
+    { "name": "url", "type": "string", "default": "" },
+    { "name": "method", "type": "string", "default": "" },
+    { "name": "scenario_id", "type": "string", "default": "" },
+    { "name": "smartlink_variant_id", "type": "string", "default": "" },
+    { "name": "redirect_to", "type": "string", "default": "" },
+    { "name": "seed", "type": "string", "default": "" },
+    { "name": "headers", "type": "string", "default": "{}" },
+    { "name": "cf", "type": "string", "default": "{}" },
+    { "name": "params", "type": "string", "default": "{}" },
+    { "name": "raw", "type": "string", "default": "{}" },
+    { "name": "campaign_id", "type": "string", "default": "" },
+    { "name": "zone_id", "type": "string", "default": "" },
+    { "name": "cost", "type": "string", "default": "" }
+  ]
+}

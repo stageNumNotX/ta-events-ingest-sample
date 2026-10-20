@@ -1,0 +1,87 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cmd/server/**"
+      - "internal/ingest/**"
+      - "internal/pubsub/**"
+      - "internal/config/**"
+      - "Dockerfile"
+      - "go.mod"
+      - "go.sum"
+      - ".dockerignore"
+      - ".gcloudignore"
+  workflow_dispatch:
+
+# Keyless GCP auth via Workload Identity Federation.
+# Set repo variables GCP_PROJECT_ID, GCP_REGION, GCP_RUNTIME_SA, GCP_WIF_PROVIDER.
+# Set repo secrets EVENTS_INGEST_SECRET and IP_HASH_SALT.
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  REGION: ${{ vars.GCP_REGION || 'europe-west1' }}
+  SERVICE: ta-events-ingest
+  PUBSUB_TOPIC: ta-events
+  MAX_BATCH_SIZE: "20"
+  RUNTIME_SA: ${{ vars.GCP_RUNTIME_SA }}
+  WIF_PROVIDER: ${{ vars.GCP_WIF_PROVIDER }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Format
+        run: test -z "$(gofmt -l .)"
+      - name: Vet
+        run: go vet ./...
+      - name: Test
+        run: go test ./...
+
+  deploy:
+    needs: test
+    if: ${{ vars.GCP_PROJECT_ID != '' && vars.GCP_WIF_PROVIDER != '' && vars.GCP_RUNTIME_SA != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - id: auth
+        name: Authenticate to GCP (WIF)
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.RUNTIME_SA }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Deploy Cloud Run (build from source)
+        run: |
+          gcloud run deploy "${SERVICE}" \
+            --source . \
+            --project "${PROJECT_ID}" \
+            --region "${REGION}" \
+            --service-account "${RUNTIME_SA}" \
+            --min-instances 0 --max-instances 10 \
+            --cpu 1 --memory 256Mi --concurrency 200 \
+            --timeout 10s \
+            --allow-unauthenticated \
+            --set-env-vars "^@^PROJECT_ID=${PROJECT_ID}@PUBSUB_TOPIC=${PUBSUB_TOPIC}@MAX_BATCH_SIZE=${MAX_BATCH_SIZE}@EVENTS_INGEST_SECRET=${EVENTS_INGEST_SECRET}@IP_HASH_SALT=${IP_HASH_SALT}"
+        env:
+          EVENTS_INGEST_SECRET: ${{ secrets.EVENTS_INGEST_SECRET }}
+          IP_HASH_SALT: ${{ secrets.IP_HASH_SALT }}
+
+      - name: Show service URL
+        run: |
+          gcloud run services describe "${SERVICE}" \
+            --project "${PROJECT_ID}" --region "${REGION}" \
+            --format='value(status.url)'

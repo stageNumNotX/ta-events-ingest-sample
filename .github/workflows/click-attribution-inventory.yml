@@ -1,0 +1,23 @@
+name: Click attribution inventory self-test
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/click-attribution-inventory.yml
+      - scripts/click-attribution-inventory.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Syntax and sanitized report checks (no cloud)
+        run: |
+          python3 -m py_compile scripts/click-attribution-inventory.py
+          python3 scripts/click-attribution-inventory.py --self-test
